@@ -1,0 +1,151 @@
+CREATE DATABASE Dushkal;
+USE Dushkal;
+SHOW databases;
+SET AUTOCOMMIT = 0;
+-- Creating table for farmer -- 
+CREATE TABLE Farmer(
+	farmer_id int NOT NULL,
+    first_name varchar(255) NOT NULL,
+    Last_name varchar(255),
+    age int,
+    landInAcres int,
+    addressPlace varchar(20),
+    PRIMARY KEY (farmer_id)
+);
+-- Inserting data in Farmer table -- 
+INSERT INTO Farmer (farmer_id, first_name, last_name, age, landInAcres, addressPlace) VALUES
+(1, 'Mohit', 'Khairnar', 19, 50, 'Nashik'),
+(2, 'Ayush', 'Wadalkar', 20, 500, 'Malegaon'),
+(3, 'Adwait', 'Samak', 18, 50, 'Vardha'),
+(4, 'Sarthak', 'Deshmukh', 17, 100, 'Nagpur'),
+(5, 'Abhishek', 'Deokar', 22, 120, 'Sangli');
+
+-- Printing the Farmer table -- 
+SELECT * from Farmer;
+
+-- Creating table for SideWork -- 
+CREATE TABLE SideWork(
+	work_id int NOT NULL,
+    farmer_id int NOT NULL auto_increment,
+    workType varchar(255),
+    income int,
+    durationPerDay int,
+    PRIMARY KEY(work_id,farmer_id),
+    foreign key (farmer_id) references Farmer(farmer_id)
+);
+-- Inserting data in SideWork table -- 
+INSERT INTO SideWork (work_id, workType, income, durationPerDay) VALUES
+(10, 'Poultry Farming', 30000, 8),
+(20, 'Organic Farming', 40000, 7),
+(30, 'Flower Business', 25000, 5),
+(40, 'Organic Fertilizer', 60000, 9),
+(50, 'Milk delivery', 35000, 12);
+
+-- Printing the SideWork table -- 
+SELECT * from SideWork;
+
+-- Creating table for Well_Info -- 
+CREATE TABLE Well_Info(
+	well_id int NOT NULL,
+    depth int,
+    waterlevel int,
+    yearOfInfo int,
+    typeOfSoil varchar(255),
+    radius int,
+    PRIMARY KEY(well_id)
+);
+-- Inserting data in Well_Info table -- 
+INSERT INTO Well_Info (well_id, depth, waterlevel, yearOfInfo, typeOfSoil, radius) VALUES
+(1, 400, 200, 2022, 'well for plantation',18),
+(2, 430, 100, 2022, 'polluted',20),
+(3, 440, 15, 2022, 'sutable for rice like crops',21),
+(4, 405, 120, 2022, 'black soil for farming',23),
+(5, 410, 300, 2022, 'not good', 18);
+
+-- Printing the Well_Info table -- 
+SELECT * from Well_Info;
+
+-- Creating table for Water_Info -- 
+CREATE TABLE Water_Info(
+	ph_value int NOT NULL,
+    well_id int NOT NULL auto_increment,
+    toxic_range varchar(255),
+	purity_range varchar(255),
+    PRIMARY KEY(ph_value,well_id),
+    foreign key (well_id) references Well_Info(well_id)
+);
+-- Inserting data in Water_Info table -- 
+INSERT INTO Water_Info (ph_value,toxic_range,purity_range) VALUES
+(8, '80-90', '10-20'),
+(7, '10-20', '20-40'),
+(5, '20-30', '40-45'),
+(9, '40-45', '45-50'),
+(12, '45-50', '50-60');
+
+-- Printing the Water_Info table -- 
+SELECT * from Water_Info;
+
+-- Creating table for Scientific_measures -- 
+CREATE TABLE Scientific_measures(
+	ph_analysis varchar(255),
+    goodOrNot bool,
+    toxic_analysis varchar(255),
+	purity_analysis varchar(255),
+    PRIMARY KEY(ph_analysis,goodOrNot)
+);
+-- Inserting data in Scientific_measures table -- 
+INSERT INTO Scientific_measures (ph_analysis,goodOrNot,toxic_analysis,purity_analysis) VALUES
+('Slightly acidic may cause seviour damage', false, 'slightly acidic','Not pure'),
+('Good but may improve', true, 'Not that much toxic', 'Slightly pure'),
+('Highly acidic', false, 'Highly toxic as it is acidic', 'Not pure'),
+('Basic in nature', false, 'Hard water', 'Not pure'),
+('Neutral', true, 'Not a toxic', 'Highly pure');
+
+-- Printing the Scientific_measures table -- 
+SELECT * from Scientific_measures;
+
+-- Create table for Officers_Info --
+CREATE TABLE Officers_Info(
+	officer_id int NOT NULL,
+    first_name varchar(255) NOT NULL,
+    Last_name varchar(255),
+    age int,
+    post varchar(20),
+    ordered_by varchar(255),
+    PRIMARY KEY (officer_id)
+);
+
+-- Inserting data in Officers_Info table -- 
+INSERT INTO Officers_Info () VALUES
+(1, 'Brijesh', 'Kumar', 19, 'Chef Manager', 'Rathi Sir'),
+(2, 'Ayush', 'Wadalkar', 20, 'CEO', 'Narnaware Sir'),
+(3, 'Nirmit', 'Chattoo', 18, 'Chef executive', 'Kulkarni Sir'),
+(4, 'Sarthak', 'Deshmukh', 17, 'Central advisor', 'Shetty Mam'),
+(5, 'Kshitish', 'Savkar', 22, 'Place locator', 'Rathod Sir');
+
+-- Printing the Officers_Info table -- 
+SELECT * from Officers_Info;
+
+-- Creating table for Survey_Info -- 
+CREATE TABLE Survey_Info(
+	ph_value int NOT NULL,
+    purity_range varchar(255),
+    toxicity_range varchar(255),
+	typeOfSoil varchar(255),
+    officer_id int NOT NULL auto_increment,
+    PRIMARY KEY(ph_value,officer_id),
+    foreign key (officer_id) references Officers_Info(officer_id)
+);
+-- Inserting data in Survey_Info table -- 
+INSERT INTO Survey_Info (ph_value,purity_range,toxicity_range,typeOfSoil) VALUES
+(8, '80-90', '10-20','well for plantation'),
+(7, '10-20', '20-40','polluted'),
+(5, '20-30', '40-45', 'sutable for rice like crops'),
+(9, '40-45', '45-50','black soil for farming'),
+(12, '45-50', '50-60', 'not good');
+
+-- Printing the Survey_Info table -- 
+SELECT * from Survey_Info;
+select * from Survey_Info where typeOfSoil like %d;
+
+
